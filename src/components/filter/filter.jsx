@@ -3,10 +3,11 @@ import css from './filter.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { filterContacts } from '../../redux/contactsSlice';
+import {filterSelector} from '../../redux/selectors'
 
 const Filter = () => {
   const filterInputId = nanoid();
-  const {filter} = useSelector(state => state);
+  const filter = useSelector(filterSelector);
   const dispatch = useDispatch();
   const changeFilter = event => {
     dispatch(filterContacts(event.target.value.toLowerCase()));

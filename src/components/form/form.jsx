@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import css from './form.module.css';
 import { nanoid } from 'nanoid';
-import { aadContacts } from '../../redux/contactsSlice';
+/*import { aadContacts } from '../../redux/contactsSlice';*/
 import { contactsSelector } from '../../redux/selectors';
 
 const Form = () => {
@@ -26,7 +26,7 @@ const Form = () => {
         return;
     }
   };
-  const formSubmit = event => {
+  /* const formSubmit = event => {
     event.preventDefault();
     const data = {
       name: event.target.name.value,
@@ -44,7 +44,7 @@ const Form = () => {
       dispatch(aadContacts(contact));
       reset();
     }
-  };
+  };*/
 
   const reset = () => {
     setName('');
@@ -52,7 +52,7 @@ const Form = () => {
   };
 
   return (
-    <form onSubmit={formSubmit} className={css.form}>
+    <form /*onSubmit={formSubmit}*/ className={css.form}>
       <label className={css.form__name} htmlFor={nameInputId}>
         Name
       </label>
