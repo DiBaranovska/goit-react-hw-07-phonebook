@@ -4,6 +4,7 @@ import css from './form.module.css';
 import { nanoid } from 'nanoid';
 import Loader from '../Loader';
 import { addContactThunk } from '../../redux/contacts/thunks';
+import { contactsSelector } from '../../redux/selectors';
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const Form = () => {
   const nameInputId = nanoid();
   const telInputId = nanoid();
 
-  const { contacts, isLoading, error } = useSelector(state => state.contacts);
+  const { contacts, isLoading, error } = useSelector(contactsSelector);
 
   const handleInputChange = event => {
     switch (event.target.name) {

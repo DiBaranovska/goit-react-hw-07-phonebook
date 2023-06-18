@@ -3,7 +3,7 @@ import css from './filter.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { filterContacts } from '../../redux/contactsSlice';
-import {filterSelector} from '../../redux/selectors'
+import { filterSelector } from '../../redux/selectors';
 
 const Filter = () => {
   const filterInputId = nanoid();

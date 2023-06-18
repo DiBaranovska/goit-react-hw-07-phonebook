@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 import Contact from '../contactItem/contact';
 import css from './contacts.module.css';
 import Loader from '../Loader';
-import { filterSelector } from '../../redux/selectors';
+import { filterSelector, contactsSelector } from '../../redux/selectors';
 import { fetchAll } from '../../redux/contacts/thunks';
 
 const Contacts = () => {
   const [visibleContacts, setVisivbleContacts] = useState([]);
   const filter = useSelector(filterSelector);
 
-  const { contacts, isLoading, error } = useSelector(state => state.contacts);
+  const { contacts, isLoading, error } = useSelector(contactsSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
