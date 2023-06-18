@@ -1,15 +1,22 @@
-import { getContactsThunk } from './contacts/thunks';
+import {
+  fetchAll,
+  addContactThunk,
+  deleteContactThunk,
+} from './contacts/thunks';
 import { initialStateContact } from './contacts/initialStateContact';
-const { createSlice } = require('@reduxjs/toolkit');
+const { createSlice, isAnyOf } = require('@reduxjs/toolkit');
 
 const handlePending = state => {
   state.isLoading = true;
 };
 
-const handleFulfilled = (state, { payload }) => {
+const handleFulfilled = state => {
   state.isLoading = false;
-  state.contacts = payload;
   state.error = '';
+};
+
+const handleFulfilledGetContacts = (state, { payload }) => {
+  state.contacts = payload;
 };
 
 const handleRejected = (state, { payload }) => {
@@ -17,18 +24,49 @@ const handleRejected = (state, { payload }) => {
   state.error = payload;
 };
 
+const handleFulfilledPostContact = (state, { payload }) => {
+  state.contacts.push(payload);
+};
+
+const handleFulfilledDeleteContact = (state, { payload }) => {
+  state.contacts = state.contacts.filter(contact => contact.id !== payload.id);
+};
+
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: initialStateContact,
   extraReducers: builder => {
     builder
-      .addCase(getContactsThunk.pending, handlePending)
-      .addCase(getContactsThunk.fulfilled, handleFulfilled)
-      .addCase(getContactsThunk.rejected, handleRejected);
+      .addCase(fetchAll.fulfilled, handleFulfilledGetContacts)
+      .addCase(addContactThunk.fulfilled, handleFulfilledPostContact)
+      .addCase(deleteContactThunk.fulfilled, handleFulfilledDeleteContact)
+      .addMatcher(
+        isAnyOf(
+          fetchAll.pending,
+          addContactThunk.pending,
+          deleteContactThunk.pending
+        ),
+        handlePending
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchAll.rejected,
+          addContactThunk.rejected,
+          deleteContactThunk.rejected
+        ),
+        handleRejected
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchAll.fulfilled,
+          addContactThunk.fulfilled,
+          deleteContactThunk.fulfilled
+        ),
+        handleFulfilled
+      );
   },
 });
 export const contactsReducer = contactsSlice.reducer;
-/*export const { aadContacts, deleteContacts } = contactsSlice.actions;*/
 
 const initialStateFilter = { filter: '' };
 

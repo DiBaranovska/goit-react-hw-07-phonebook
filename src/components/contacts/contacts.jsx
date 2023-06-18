@@ -6,7 +6,7 @@ import Contact from '../contactItem/contact';
 import css from './contacts.module.css';
 import Loader from '../Loader';
 import { filterSelector } from '../../redux/selectors';
-import { getContactsThunk } from '../../redux/contacts/thunks';
+import { fetchAll } from '../../redux/contacts/thunks';
 
 const Contacts = () => {
   const [visibleContacts, setVisivbleContacts] = useState([]);
@@ -16,7 +16,7 @@ const Contacts = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getContactsThunk());
+    dispatch(fetchAll());
   }, [dispatch]);
 
   useEffect(() => {
